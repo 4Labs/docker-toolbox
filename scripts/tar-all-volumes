@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ -z "$DOCKER_VOLUMES" ]; then
+    echo 'Error: the DOCKER_VOLUMES environment variable is empty.'
+    exit 1
+fi
+
+tar-volume () {
+    parentdir="$(dirname "$1")"
+    foldername="$(basename "$1")"
+    mkdir -p "/home/output/archived-volumes/$parentdir"
+    echo "Creating volume archive at /home/output/archived-volumes/$parentdir/$foldername.tar.gz"
+    tar -zcvf "/home/output/archived-volumes/$parentdir/$foldername.tar.gz" "$1"
+}
+
+for path in $DOCKER_VOLUMES;
+do
+    tar-volume $path
+done
