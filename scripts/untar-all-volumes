@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ -z "$DOCKER_VOLUMES" ]; then
+    echo 'Error: the DOCKER_VOLUMES environment variable is empty.'
+    exit 1
+fi
+
+untar-volume () {
+    PARENT_DIRECTORY="$(dirname "$1")"
+    DIRECTORY_NAME="$(basename "$1")"
+    if [ ! -f "/home/output/archived-volumes/${PARENT_DIRECTORY}/${DIRECTORY_NAME}.tar.gz" ]; then
+        echo "Could not find expected archive at /home/output/archived-volumes/${PARENT_DIRECTORY}/${DIRECTORY_NAME}.tar.gz"
+        return 1
+    fi
+    echo "Unpacking archive /home/output/archived-volumes/${PARENT_DIRECTORY}/${DIRECTORY_NAME}.tar.gz"
+    tar -xvzf "/home/output/archived-volumes/${PARENT_DIRECTORY}/${DIRECTORY_NAME}.tar.gz" -C "${PARENT_DIRECTORY}"
+}
+
+for VOLUME_PATH in $DOCKER_VOLUMES;
+do
+    untar-volume $VOLUME_PATH
+done
