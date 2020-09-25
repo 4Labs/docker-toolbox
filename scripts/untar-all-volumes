@@ -13,7 +13,7 @@ untar-volume () {
         return 1
     fi
     echo "Unpacking archive /home/output/archived-volumes/${PARENT_DIRECTORY}/${DIRECTORY_NAME}.tar.gz"
-    tar -xvzf "/home/output/archived-volumes/${PARENT_DIRECTORY}/${DIRECTORY_NAME}.tar.gz" -C "${PARENT_DIRECTORY}"
+    tar -xvzf "/home/output/archived-volumes/${PARENT_DIRECTORY}/${DIRECTORY_NAME}.tar.gz" -C "/"
 }
 
 for VOLUME_PATH in $DOCKER_VOLUMES;
